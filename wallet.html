@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet</title>
+    <link rel="stylesheet" href="wallet.css">
+    <script>
+      function displayAd() {
+        const adContainer = document.createElement('div');
+        adContainer.id = 'ad-container';
+        adContainer.style.position = 'fixed';
+        adContainer.style.top = '0';
+        adContainer.style.left = '0';
+        adContainer.style.width = '100%';
+        adContainer.style.height = '100%';
+        adContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+        adContainer.style.color = 'white';
+        adContainer.style.fontSize = '24px';
+        adContainer.style.textAlign = 'center';
+        adContainer.style.zIndex = '10000';
+        adContainer.innerHTML = '<p>Ad will play for 30 seconds...</p>';
+        document.body.appendChild(adContainer);
+
+        setTimeout(() => {
+          adContainer.remove();
+        }, 30000);
+      }
+      displayAd();
+    </script>
+</head>
+<body>
+<header>
+    <div class="ad-placeholder">Ad Space Above Header</div>
+<nav class="context-nav">
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+            </ul>
+        </nav>
+        <h1>Wallet</h1>
+    </header>
+    <div class="ad-placeholder">Ad Space Below Header</div>
+    <main>
+    <div class="ad-placeholder">Ad Space Inside Main Content</div>
+    <p>Welcome to your wallet!</p>
+    <div id="current-balance"></div>
+    <button id="clear-video-logs-button">Clear Video Logs</button>
+
+    <h2>Video Earnings Analysis</h2>
+    <table id="earnings-table">
+      <thead>
+        <tr>
+          <th>Video ID</th>
+          <th>Rewarded</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+
+    <h2>Withdraw Rewards</h2>
+    <div id="withdrawal-details">
+      <label for="payment-method">Payment Method:</label>
+      <select id="payment-method">
+        <option value="paytm">Paytm</option>
+        <option value="phonepay">PhonePe</option>
+        <option value="googlepay">Google Pay</option>
+        <option value="bank">Direct Bank Account</option>
+      </select><br><br>
+
+      <div id="bank-details" style="display: none;">
+        <label for="account-number">Account Number:</label>
+        <input type="text" id="account-number" name="account-number"><br><br>
+        <label for="confirm-account-number">Confirm Account Number:</label>
+        <input type="text" id="confirm-account-number" name="confirm-account-number"><br><br>
+        <label for="ifsc-code">IFSC Code:</label>
+        <input type="text" id="ifsc-code" name="ifsc-code"><br><br>
+      </div>
+
+      <div id="upi-details" style="display: none;">
+        <label for="upi-id">UPI ID:</label>
+        <input type="text" id="upi-id" name="upi-id" required><br><br>
+      </div>
+
+      <label for="withdrawal-amount">Withdrawal Amount:</label>
+      <input type="number" id="withdrawal-amount" name="withdrawal-amount" min="10"><br><br>
+
+      <button id="withdraw-button" disabled>Withdraw</button>
+      <p>Minimum withdrawal amount: ₹10</p>
+    </div>
+    <div class="ad-placeholder">Ad Space Above Footer</div>
+    </main>
+    <footer>
+        <a href="earning.html" class="btn">Start Earning</a>
+        <a href="index.html" class="btn active">Home</a>
+        <a href="wallet.html" class="btn">Wallet</a>
+    </footer>
+
+    <script>
+      let userEarnings = parseFloat(localStorage.getItem('userEarnings')) || 0;
+      document.getElementById("current-balance").textContent = `Current Balance: ₹${userEarnings.toFixed(2)}`;
+
+      let videosWatched = JSON.parse(localStorage.getItem('videosWatched')) || [];
+      const earningsTableBody = document.getElementById('earnings-table').querySelector('tbody');
+
+      videosWatched.forEach(video => {
+        const row = document.createElement('tr');
+        const videoIdCell = document.createElement('td');
+        const rewardedCell = document.createElement('td');
+
+        videoIdCell.textContent = video.videoId;
+        rewardedCell.textContent = video.rewarded ? 'Yes' : 'No';
+
+        row.appendChild(videoIdCell);
+        row.appendChild(rewardedCell);
+        earningsTableBody.appendChild(row);
+      });
+
+      const paymentMethodSelect = document.getElementById('payment-method');
+      const accountNumberInput = document.getElementById('account-number');
+      const ifscCodeInput = document.getElementById('ifsc-code');
+      const upiIdInput = document.getElementById('upi-id');
+      const withdrawButton = document.getElementById('withdraw-button');
+      const bankDetailsDiv = document.getElementById('bank-details');
+      const upiDetailsDiv = document.getElementById('upi-details');
+      const confirmAccountNumberInput = document.getElementById('confirm-account-number');
+      const withdrawalAmountInput = document.getElementById('withdrawal-amount');
+
+      function showPaymentDetails() {
+        const paymentMethod = paymentMethodSelect.value;
+        if (paymentMethod === 'bank') {
+          bankDetailsDiv.style.display = 'block';
+          upiDetailsDiv.style.display = 'none';
+        } else {
+          bankDetailsDiv.style.display = 'none';
+          upiDetailsDiv.style.display = 'block';
+        }
+        checkWithdrawalDetails();
+      }
+
+      function checkWithdrawalDetails() {
+        const paymentMethod = paymentMethodSelect.value;
+        let isValid = false;
+
+        if (paymentMethod === 'bank') {
+          const accountNumber = accountNumberInput.value;
+          const confirmAccountNumber = confirmAccountNumberInput.value;
+          const ifscCode = ifscCodeInput.value;
+          isValid = accountNumber && confirmAccountNumber && ifscCode && accountNumber === confirmAccountNumber;
+        } else {
+          isValid = upiIdInput.checkValidity();
+        }
+
+        const withdrawalAmount = parseFloat(withdrawalAmountInput.value);
+        isValid = isValid && withdrawalAmount >= 10 && withdrawalAmount <= userEarnings;
+
+        withdrawButton.disabled = !isValid;
+      }
+
+      paymentMethodSelect.addEventListener('change', showPaymentDetails);
+      accountNumberInput.addEventListener('input', checkWithdrawalDetails);
+      ifscCodeInput.addEventListener('input', checkWithdrawalDetails);
+      upiIdInput.addEventListener('input', checkWithdrawalDetails);
+      confirmAccountNumberInput.addEventListener('input', checkWithdrawalDetails);
+      withdrawalAmountInput.addEventListener('input', checkWithdrawalDetails);
+
+      withdrawButton.addEventListener('click', () => {
+        const paymentMethod = paymentMethodSelect.value;
+        const withdrawalAmount = parseFloat(withdrawalAmountInput.value);
+        let paymentDetails = {};
+
+        if (paymentMethod === 'bank') {
+          paymentDetails = {
+            accountNumber: accountNumberInput.value,
+            ifscCode: ifscCodeInput.value
+          };
+        } else {
+          paymentDetails = {
+            upiId: upiIdInput.value
+          };
+        }
+
+        // Store payment details in local storage
+        localStorage.setItem('paymentMethod', paymentMethod);
+        localStorage.setItem('paymentDetails', JSON.stringify(paymentDetails));
+        localStorage.setItem('withdrawalAmount', withdrawalAmount.toString());
+      });
+
+      // Show initial payment details based on selected method
+      showPaymentDetails();
+      checkWithdrawalDetails();
+
+      const clearVideoLogsButton = document.getElementById('clear-video-logs-button');
+      clearVideoLogsButton.addEventListener('click', () => {
+        localStorage.removeItem('videosWatched');
+        location.reload();
+      });
+    </script>
+</body>
+</html>

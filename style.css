@@ -1,0 +1,272 @@
+body {
+    font-family: Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #333;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #f0f0f0, #e0e0e0);
+}
+
+.ad-placeholder {
+  text-align: center;
+  padding: 10px;
+  background-color: #eee;
+  margin-bottom: 10px;
+}
+
+header, footer, main {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 1.5em 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1000;
+}
+
+header h1 {
+    margin: 0 auto;
+    color: #fff;
+    font-size: 2em;
+    line-height: 1.5em;
+}
+
+.header-lines {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 30px;
+    height: 3px;
+    background-color: #fff;
+    box-shadow: 0 7px 0 #fff, 0 14px 0 #fff;
+}
+
+.context-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.context-nav ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+.context-nav a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.auth-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.auth-nav ul li {
+    margin-left: 10px;
+}
+
+nav ul {
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+nav ul li {
+    margin: 0 1em;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #f0f0f0;
+}
+
+main {
+    padding: 20px;
+}
+
+#hero {
+    text-align: center;
+    padding: 50px;
+    background-color: #ddd;
+    animation: fadeIn 2s;
+}
+
+#welcome-text {
+    animation: colorChange 5s infinite alternate, zoomIn 5s infinite;
+}
+
+.buttons {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.message {
+    background-color: #e9ecef;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 1.5em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: pulse 5s infinite alternate;
+}
+
+.left-message {
+    background: linear-gradient(to right, #00c6ff, #ffffff);
+    color: #333;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.left-message p {
+    font-size: 1.2em;
+}
+
+.left-message:hover {
+    transform: scale(1.1);
+}
+
+.right-message {
+    background: linear-gradient(to left, #00c6ff, #ffffff);
+    color: #333;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.right-message p {
+    font-size: 1.2em;
+}
+
+.right-message:hover {
+    transform: scale(1.1);
+}
+
+footer {
+    color: #fff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    justify-content: center;
+}
+
+ main ul li {
+  margin-bottom: 10px;
+}
+
+#player {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+main ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+main ul li {
+  margin-bottom: 10px;
+}
+
+#video-duration,
+#video-timer {
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #fff;
+  background-color: #007bff;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.btn.active {
+  background-color: #0056b3;
+}
+
+footer {
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+#reward-earnings {
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #fff;
+  background-color: #28a745;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+      function displayAd() {
+        const adContainer = document.createElement('div');
+        adContainer.id = 'ad-container';
+        adContainer.style.position = 'fixed';
+        adContainer.style.top = '0';
+        adContainer.style.left = '0';
+        adContainer.style.width = '100%';
+        adContainer.style.height = '100%';
+        adContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+        adContainer.style.color = 'white';
+        adContainer.style.fontSize = '24px';
+        adContainer.style.textAlign = 'center';
+        adContainer.style.zIndex = '10000';
+        adContainer.innerHTML = '<p>Ad will play for 30 seconds...</p>';
+        document.body.appendChild(adContainer);
+
+        setTimeout(() => {
+          adContainer.remove();
+        }, 30000);
+      }
+      displayAd();
+    </script>
+</head>
+<body>
+    <div class="ad-placeholder">Ad Space Above Header</div>
+<header>
+<nav class="context-nav">
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+            </ul>
+        </nav>
+        <h1>VidEarn</h1>
+    </header>
+    <div class="ad-placeholder">Ad Space Below Header</div>
+    
+    <main>
+    <div class="ad-placeholder">Ad Space Inside Main Content</div>
+<section id="hero">
+            <h2 id="welcome-text">Welcome to VidEarn</h2>
+            <p>"I can read your mind" ನೀನು ಇವಾಗ ಯೋಚನೆ ಮಾಡುತ್ತಿರೋತರ ನಾನು ಒಂದು ಕ್ಷಣದಲ್ಲಿ ಯೋಚಿಸುತ್ತಿದ್ದೆ.Stop thinking start earning</p>
+        </section>
+    <div class="buttons">
+        <a href="demo.html" class="btn">Demo</a>
+        <a href="earning.html" class="btn">Earning</a>
+        <a href="referring.html" class="btn">Referring</a>
+    </div>
+        <div class="left-message">
+            <p>Spend your Weekends with Enjoyments</p>
+        </div>
+<div class="right-message">
+            <p>Daily & Weekly Payouts </p>
+        </div>
+    
+    <div class="ad-placeholder">Ad Space Above Footer</div>
+<footer>
+        <p>&copy; 2025 VidEarn. All rights reserved.</p>
+        <p>Contact us: <a href="mailto:info@videarn.com">info@videarn.com</a></p>
+        <div class="social-links">
+            <a href="#"><img src="facebook.png" alt="Facebook"></a>
+            <a href="#"><img src="twitter.png" alt="Twitter"></a>
+            <a href="#"><img src="linkedin.png" alt="LinkedIn"></a>
+        </div>
+    </footer>
+    <div class="ad-placeholder">Ad Space Below Footer</div>
+</main>
+
+<script src="auth.js" type="module"></script>
+</body>
+</html>

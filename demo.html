@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+      function displayAd() {
+        const adContainer = document.createElement('div');
+        adContainer.id = 'ad-container';
+        adContainer.style.position = 'fixed';
+        adContainer.style.top = '0';
+        adContainer.style.left = '0';
+        adContainer.style.width = '100%';
+        adContainer.style.height = '100%';
+        adContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+        adContainer.style.color = 'white';
+        adContainer.style.fontSize = '24px';
+        adContainer.style.textAlign = 'center';
+        adContainer.style.zIndex = '10000';
+        adContainer.innerHTML = '<p>Ad will play for 30 seconds...</p>';
+        document.body.appendChild(adContainer);
+
+        setTimeout(() => {
+          adContainer.remove();
+        }, 30000);
+      }
+      displayAd();
+    </script>
+</head>
+<body>
+    <div class="ad-placeholder">Ad Space Above Header</div>
+<header>
+<nav class="context-nav">
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+            </ul>
+        </nav>
+        <h1>Start a Free Demo</h1>
+    </header>
+    <div class="ad-placeholder">Ad Space Below Header</div>
+    <main>
+    <div class="ad-placeholder">Ad Space Inside Main Content</div>
+    <p>This is the start a free demo page.</p>
+    </main>
+    <div class="ad-placeholder">Ad Space Above Footer</div>
+</body>
+</html>

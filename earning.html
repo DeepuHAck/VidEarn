@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Earning</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+      let youtubePlayerReady = false;
+
+      function displayAd() {
+        const adContainer = document.createElement('div');
+        adContainer.id = 'ad-container';
+        adContainer.style.position = 'fixed';
+        adContainer.style.top = '0';
+        adContainer.style.left = '0';
+        adContainer.style.width = '100%';
+        adContainer.style.height = '100%';
+        adContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+        adContainer.style.color = 'white';
+        adContainer.style.fontSize = '24px';
+        adContainer.style.textAlign = 'center';
+        adContainer.style.zIndex = '10000';
+        adContainer.innerHTML = '<p>Ad will play for 30 seconds...</p>';
+        document.body.appendChild(adContainer);
+
+        setTimeout(() => {
+          adContainer.remove();
+          initYoutubePlayer();
+        }, 30000);
+      }
+
+      function onYouTubeIframeAPIReady() {
+        youtubePlayerReady = true;
+      }
+
+      function initYoutubePlayer() {
+        if (youtubePlayerReady) {
+          setRandomVideo();
+          document.getElementById("reward-earnings").textContent = `Total Earnings: ₹${userEarnings.toFixed(2)}`;
+        }
+      }
+    </script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+</head>
+<body onload="displayAd()">
+<header>
+<nav class="context-nav">
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+            </ul>
+        </nav>
+        <h1>Start Earning</h1>
+    </header>
+    <main>
+    <div class="ad-placeholder">Ad Space Inside Main Content</div>
+    <ul>
+      <li><strong style="color: red;">No Earnings if you Skip the video</strong></li>
+      <li><strong style="color: red;">No Earnings if you pause the video</strong></li>
+      <li><strong style="color: red;">No Earnings if you Refresh the Page inbetween</strong></li>
+      <li><strong style="color: red;">No Earnings if Timer Resets</strong></li>
+    </ul>
+    <div id="video-duration"></div>
+    <div id="video-timer">Earnings Credits in: 00:00:00</div>
+    <div id="player"></div>
+    <div id="reward-earnings"></div>
+    </main>
+    <div class="ad-placeholder">Ad Space Above Footer</div>
+    <script>
+      let timerInterval;
+      let startTime;
+      let player;
+      let videoCompleted = false;
+      let userEarnings = parseFloat(localStorage.getItem('userEarnings')) || 0;
+      let videosWatched = JSON.parse(localStorage.getItem('videosWatched')) || [];
+      let pageRefreshed = false;
+      if (localStorage.getItem('pageRefreshed') === 'true') {
+        pageRefreshed = true;
+        localStorage.removeItem('pageRefreshed');
+      }
+
+      window.addEventListener('beforeunload', function () {
+        localStorage.setItem('pageRefreshed', 'true');
+      });
+
+      const channelId = "UC_TDuxxC3R9A87JMygZJLmA";
+      const apiKey = "AIzaSyAz0wA8-yTcUR-KPBkIfdkEUiy-vJFPpsc";
+      const maxResults = 50;
+
+      async function fetchVideoIds() {
+        const url = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&part=id&order=date&maxResults=${maxResults}&type=video`;
+
+        try {
+          const response = await fetch(url);
+          const data = await response.json();
+
+          if (data.error) {
+            console.error("YouTube API error:", data.error);
+            return [];
+          }
+
+          const videoIds = data.items.map(item => item.id.videoId);
+          return videoIds;
+        } catch (error) {
+          console.error("Error fetching video IDs:", error);
+          return [];
+        }
+      }
+
+      async function setRandomVideo() {
+        const videoIds = await fetchVideoIds();
+
+        if (videoIds.length > 0) {
+          const randomIndex = Math.floor(Math.random() * videoIds.length);
+          const randomVideoId = videoIds[randomIndex];
+
+          // Initialize the YouTube player
+          player = new YT.Player('player', {
+            height: '315',
+            width: '560',
+            videoId: randomVideoId,
+            playerVars: {
+              'controls': 0,
+              'showinfo': 0,
+              'rel': 0,
+              'disablekb': 1
+            },
+            events: {
+              'onReady': function onPlayerReady(event) {
+                event.target.playVideo();
+              },
+              'onStateChange': function onPlayerStateChange(event) {
+                if (event.data == YT.PlayerState.PLAYING) {
+                  startTimer();
+                } else if (event.data == YT.PlayerState.ENDED) {
+                  stopTimer();
+                  videoCompleted = true;
+                  rewardUser(randomVideoId);
+                } else if (event.data == YT.PlayerState.PAUSED) {
+                  stopTimer();
+                  videoCompleted = false;
+                } else if (event.data == YT.PlayerState.CUED) {
+                  videoCompleted = false;
+                }
+              }
+            }
+          });
+
+          // Fetch and display video duration
+          const duration = await getVideoDuration(randomVideoId);
+          document.getElementById("video-duration").textContent = `Video Duration: ${duration}`;
+
+        } else {
+          console.warn("No video IDs found.");
+        }
+      }
+
+      function rewardUser(videoId) {
+        if (pageRefreshed || !videoCompleted) {
+          videosWatched.push({
+            videoId: videoId,
+            rewarded: false
+          });
+          localStorage.setItem('videosWatched', JSON.stringify(videosWatched));
+        } else {
+          userEarnings += 1;
+          localStorage.setItem('userEarnings', userEarnings.toString());
+          document.getElementById("reward-earnings").textContent = `Total Earnings: ₹${userEarnings.toFixed(2)}`;
+
+          videosWatched.push({
+            videoId: videoId,
+            rewarded: true
+          });
+          localStorage.setItem('videosWatched', JSON.stringify(videosWatched));
+        }
+
+        localStorage.removeItem('pageRefreshed');
+        pageRefreshed = false;
+      }
+
+      async function getVideoDuration(videoId) {
+        const url = `https://www.googleapis.com/youtube/v3/videos?key=${apiKey}&id=${videoId}&part=contentDetails`;
+        try {
+          const response = await fetch(url);
+          const data = await response.json();
+          if (data.error) {
+            console.error("YouTube API error:", data.error);
+            return "Unknown";
+          }
+          const duration = data.items[0].contentDetails.duration;
+          return formatDuration(duration);
+        } catch (error) {
+          console.error("Error fetching video duration:", error);
+          return "Unknown";
+        }
+      }
+
+      function formatDuration(duration) {
+        const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+        const hours = (match[1] || '').replace('H', '');
+        const minutes = (match[2] || '').replace('M', '');
+        const seconds = match[3] || ''.replace('S', '');
+
+        let formattedDuration = '';
+        if (hours) formattedDuration += `${hours}:`;
+        formattedDuration += minutes ? `${minutes.padStart(2, '0')}:` : '00:';
+        formattedDuration += seconds ? seconds.padStart(2, '0') : '00';
+
+        return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+      }
+
+      function startTimer() {
+        startTime = Date.now();
+        timerInterval = setInterval(updateTimer, 1000);
+      }
+
+      function updateTimer() {
+        const elapsedTime = Date.now() - startTime;
+        const formattedTime = formatTime(elapsedTime);
+        document.getElementById("video-timer").textContent = `Time Elapsed: ${formattedTime}`;
+
+        // Check if the video is skipped
+        if (player && player.getCurrentTime() < elapsedTime / 1000 - 1) {
+          videoCompleted = false;
+        }
+      }
+
+      function stopTimer() {
+        clearInterval(timerInterval);
+      }
+
+      function formatTime(milliseconds) {
+        let seconds = Math.floor(milliseconds / 1000);
+        let minutes = Math.floor(seconds / 60);
+        let hours = Math.floor(minutes / 60);
+
+        seconds = seconds % 60;
+        minutes = minutes % 60;
+        hours = hours % 24;
+
+        const formattedHours = hours.toString().padStart(2, '0');
+        const formattedMinutes = minutes.toString().padStart(2, '0');
+        const formattedSeconds = seconds.toString().padStart(2, '0');
+
+        return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+      }
+
+      window.addEventListener('beforeunload', function (e) {
+        // Cancel the event
+        e.preventDefault();
+        // Chrome requires returnValue to be set
+        e.returnValue = 'If you refresh the page your earnings will be lost.';
+      });
+    </script>
+</body>
+</html>
