@@ -52,6 +52,7 @@
         <tr>
           <th>Video ID</th>
           <th>Rewarded</th>
+          <th>Reason</th>
         </tr>
       </thead>
       <tbody>
@@ -107,12 +108,15 @@
         const row = document.createElement('tr');
         const videoIdCell = document.createElement('td');
         const rewardedCell = document.createElement('td');
+        const reasonCell = document.createElement('td');
 
         videoIdCell.textContent = video.videoId;
         rewardedCell.textContent = video.rewarded ? 'Yes' : 'No';
+        reasonCell.textContent = video.reason || '';
 
         row.appendChild(videoIdCell);
         row.appendChild(rewardedCell);
+        row.appendChild(reasonCell);
         earningsTableBody.appendChild(row);
       });
 

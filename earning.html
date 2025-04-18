@@ -117,14 +117,26 @@
         }
       }
 
-      function rewardUser(videoId) {
-        if (pageRefreshed || !videoCompleted) {
-          videosWatched.push({
-            videoId: videoId,
-            rewarded: false
-          });
-          localStorage.setItem('videosWatched', JSON.stringify(videosWatched));
+     function rewardUser(videoId) {
+        const duration = player.getDuration();
+        const elapsedTime = Date.now() - startTime;
+        const videoDurationInSeconds = duration;
+        const elapsedTimeInSeconds = elapsedTime / 1000;
+
+        let rewarded = false;
+        let reason = "";
+
+        if (pageRefreshed) {
+          reason = "Page Refreshed";
+        } else if (!videoCompleted) {
+          reason = "Video Not Completed";
+        } else if (Math.abs(videoDurationInSeconds - elapsedTimeInSeconds) > 1) {
+          reason = "Video Skipped in between";
         } else {
+          rewarded = true;
+        }
+
+        if (rewarded) {
           userEarnings += 1;
           localStorage.setItem('userEarnings', userEarnings.toString());
           document.getElementById("reward-earnings").textContent = `Total Earnings: ₹${userEarnings.toFixed(2)}`;
@@ -132,6 +144,13 @@
           videosWatched.push({
             videoId: videoId,
             rewarded: true
+          });
+          localStorage.setItem('videosWatched', JSON.stringify(videosWatched));
+        } else {
+          videosWatched.push({
+            videoId: videoId,
+            rewarded: false,
+            reason: reason
           });
           localStorage.setItem('videosWatched', JSON.stringify(videosWatched));
         }
