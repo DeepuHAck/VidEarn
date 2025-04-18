@@ -17,6 +17,12 @@ body {
   margin-bottom: 10px;
 }
 
+@media (max-width: 768px) {
+  .ad-placeholder {
+    margin-bottom: 5px;
+  }
+}
+
 header, footer, main {
     border: 1px solid #ccc;
     border-radius: 5px;

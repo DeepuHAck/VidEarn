@@ -179,6 +179,12 @@ h2 {
   margin-bottom: 10px;
 }
 
+@media (max-width: 768px) {
+  #withdrawal-details {
+    width: 90%;
+  }
+}
+
 footer {
     color: #fff;
     display: flex;
