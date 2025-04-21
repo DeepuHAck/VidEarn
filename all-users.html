@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Users</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>All Users</h1>
+    <table id="user-table">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Joining Date</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const userTable = document.getElementById('user-table').getElementsByTagName('tbody')[0];
+            const urlParams = new URLSearchParams(window.location.search);
+            const usersData = urlParams.get('users');
+            const users = JSON.parse(usersData) || {};
+
+            for (const username in users) {
+                if (users.hasOwnProperty(username)) {
+                    const user = users[username];
+                    const row = userTable.insertRow();
+                    const usernameCell = row.insertCell();
+                    const emailCell = row.insertCell();
+                    const phoneCell = row.insertCell();
+                    const joiningCell = row.insertCell();
+
+                    usernameCell.textContent = username;
+                    emailCell.textContent = user.email || '';
+                    phoneCell.textContent = user.phone || '';
+                    joiningCell.textContent = user.joining || '';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

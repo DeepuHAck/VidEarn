@@ -1,0 +1,66 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+nav button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+main {
+    padding: 20px;
+}
+
+#login-signup-container {
+    width: 300px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#login-signup-toggle {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+
+#login-signup-toggle button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+#login-signup-toggle button.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#login-form, #signup-form {
+    display: none;
+}
+
+#login-form.active, #signup-form.active {
+    display: block;
+}
+
+#content-container {
+    margin-top: 20px;
+    text-align: center;
+}

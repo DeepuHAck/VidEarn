@@ -36,6 +36,8 @@
 <nav class="context-nav">
             <ul>
                 <li><a href="dashboard.html">Dashboard</a></li>
+                <li><button id="admin-login-btn">Admin Login</button></li>
+                <li><button id="user-login-btn">User Login</button></li>
             </ul>
         </nav>
         <h1>VidEarn</h1>
@@ -44,6 +46,7 @@
     
     <main>
     <div class="ad-placeholder">Ad Space Inside Main Content</div>
+
 <section id="hero">
             <h2 id="welcome-text">Welcome to VidEarn</h2>
             <p>"I can read your mind" ನೀನು ಇವಾಗ ಯೋಚನೆ ಮಾಡುತ್ತಿರೋತರ ನಾನು ಒಂದು ಕ್ಷಣದಲ್ಲಿ ಯೋಚಿಸುತ್ತಿದ್ದೆ.Stop thinking start earning</p>
@@ -73,6 +76,34 @@
     <div class="ad-placeholder">Ad Space Below Footer</div>
 </main>
 
+<div id="popup-container" style="display:none;">
+    <div id="login-signup-container">
+        <button id="close-btn">Close</button>
+        <h2>User Login / Signup</h2>
+        <div id="login-signup-toggle">
+            <button id="user-login-btn-toggle">Login</button>
+            <button id="user-signup-btn-toggle">Signup</button>
+        </div>
+
+        <form id="user-login-form">
+            <label for="user-login-username">Username:</label>
+            <input type="text" id="user-login-username" name="user-login-username" required><br><br>
+            <label for="user-login-password">Password:</label>
+            <input type="password" id="user-login-password" name="user-login-password" required><br><br>
+            <button type="submit">Login</button>
+        </form>
+
+        <form id="user-signup-form">
+            <label for="user-signup-username">Username:</label>
+            <input type="text" id="user-signup-username" name="user-signup-username" required><br><br>
+            <label for="user-signup-password">Password:</label>
+            <input type="password" id="user-signup-password" name="user-signup-password" required><br><br>
+            <button type="submit">Signup</button>
+        </form>
+    </div>
+</div>
+
 <script src="auth.js" type="module"></script>
+<script src="index.js"></script>
 </body>
 </html>

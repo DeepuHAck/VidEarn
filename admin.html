@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <header>
+        <h1>Admin Panel</h1>
+        <nav>
+            <button id="withdraw-request-btn">Withdraw Request</button>
+            <button id="coins-request-btn">Coins Request</button>
+            <button id="all-users-btn">All Users</button>
+            <button id="google-forms-btn">Google Forms</button>
+        </nav>
+    </header>
+
+    <main>
+        <div id="login-signup-container">
+            <h2>Login / Signup</h2>
+            <div id="login-signup-toggle">
+                <button id="login-btn">Login</button>
+                <button id="signup-btn">Signup</button>
+            </div>
+
+            <form id="login-form">
+                <label for="login-username">Select Admin:</label>
+                <select id="login-username" name="login-username" required>
+                    <option value="AkshayHB">AkshayHB</option>
+                    <option value="DarshanR">DarshanR</option>
+                    <option value="Deepumon">Deepumon</option>
+                </select><br><br>
+                <label for="login-password">Password:</label>
+                <input type="password" id="login-password" name="login-password" required><br><br>
+                <button type="submit">Login</button>
+            </form>
+
+            <form id="signup-form">
+                <label for="signup-username">Username:</label>
+                <input type="text" id="signup-username" name="signup-username" required><br><br>
+                <label for="signup-password">Password:</label>
+                <input type="password" id="signup-password" name="signup-password" required><br><br>
+                <button type="submit">Signup</button>
+            </form>
+            <button id="logout-btn">Logout</button>
+        </div>
+
+        <div id="content-container">
+            <!-- Content will be loaded here after login -->
+        </div>
+    </main>
+
+    <script src="admin.js"></script>
+</body>
+</html>
