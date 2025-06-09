@@ -80,7 +80,60 @@
         %Eigenvalues and right eigenvector of matrix A<br> 
         [V,D]=eig(A)<br>
         </p>
-    
+    <p><b>Euler's Method</b>
+        %Define the Objective function<br>
+f = @(x,y) (y-x)./(y+x);<br>
+
+%Input the parameters<br>
+x = input('Enter the initial value of x: ');<br>
+y = input('Enter the initial value of y(x): ');<br>
+h = input('Enter the step size (h): ');<br>
+X = input('Enter X at which Y is required: ');<br>
+Variables = {'x','y','fxy','NewY'};<br>
+k = 1; % Set iteration counter<br>
+
+while X>=x<br>
+    fprintf('Value of y at x=%f is %f \n', x, y);<br>
+    fxy = f(x,y);                % Compute f(x,y)<br>
+    newy = y+h.*fxy;             % Compute new y<br>
+    % For printing purpose<br>
+    rsl(k,:)=[x y fxy newy];<br>
+    k = k+1;       % Update iteration<br>
+    x = x+h;       % Update x<br>
+    y = newy;      % Update y<br>
+end<br>
+
+% Printing the Results<br>
+Res1= array2table (rsl);   % Convert Array to Table<br>
+Res1.Properties.VariableNames (1:size (Res1, 2)) = Variables;<br>
+% Print Optimal Result<br>
+fprintf('Output of y(%f)=%f \n', X, rsl (end,2));<br>
+</p>
+<p><b>Guass Elimination Method</b><br>
+    % Solve Ax = b using Naive Gauss Elimination<br>
+A = [1 1 1; 2 1 3; 3 4 -2];<br>
+b = [4; 7; 9];<br>
+
+% Gauss Elimination<br>
+% Get augmented matrix<br>
+Ab = [A, b];<br>
+
+% With A(1,1) as pivot Element<br>
+alpha = Ab(2,1)/Ab(1,1);<br>
+Ab(2,:) = Ab(2,:) - alpha*Ab(1,:);<br>
+alpha = Ab(3,1)/Ab(1,1);<br>
+Ab(3,:) = Ab(3,:) - alpha*Ab(1,:);<br>
+
+% With A(2,2) as pivot Element<br>
+alpha = Ab(3,2)/Ab(2,2);<br>
+Ab(3,:) = Ab(3,:) - alpha*Ab(2,:);<br>
+
+% Back-Substitution<br>
+x = zeros(3,1);<br>
+x(3) = Ab(3,end)/Ab(3,3);<br>
+x(2) = (Ab(2,end)-Ab(2,3)*x(3)) / Ab(2,2);<br>
+x(1) = ( Ab(1,end)-(Ab(1,3)*x(3)+Ab(1,2)*x(2)) ) / Ab(1,1);<br>
+</p>
     </body>
 </html>
 </body>
