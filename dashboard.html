@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Dashboard</h1>
-    <p>Program 1 Straight Fit 
+    <p><b>Program 1 Straight Fit</b> 
         x=[1:5];<br>
         y=[14,13,9,5,2];<br>
         p=polyfit(x,y);<br>
@@ -17,5 +17,72 @@
         plot(x,y,'ro',x,y_fit)<br>
         disp(p)<br>
     </p>
+    <p><b>Program 2 Polynomial</b>
+        x=[1.0:0.5:4.0];<br>
+        y=[1.1,1.3,1.6,2.0,2.7,3.4,4.1];<br>
+        p=polyfit(x,y,2);<br>
+        y_fit=polyval(p,x)<br>
+        plot(x,y,'ro',x,y_fit)<br>
+        disp(p)<br>
+    </p>
+    <p><b>Trapezoidal Method</b>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <h1>Dashboard</h1>
+    <p>Program 1 Straight line fit 
+        x=[1:5];<br>
+        y=[14,13,9,5,2];<br>
+        p=polyfit(x,y);<br>
+        p=polyfit(x,y,1);<br>
+        y_fit=polyval(p,x)<br>
+        plot(x,y,'ro',x,y_fit)<br>
+        disp(p)<br>
+    </p>
+    <p>Program 2 Polynomaial fit
+        x=[1.0:0.5:4.0];<br>
+        y=[1.1,1.3,1.6,2.0,2.7,3.4,4.1];<br>
+        p=polyfit(x,y,2);<br>
+        y_fit=polyval(p,x)<br>
+        plot(x,y,'ro',x,y_fit)<br>
+        disp(p)<br>
+    </p>
+    <p><b>Trapeziodal Method</b>
+    %mMATLAB code for syms function that creates a variable
+    %dynamically and automatically assigns
+    %to a MATLAB variable with same name
+    syms x
+    %Declare the functionf1=1/(1+x);
+    %inline creates a function of string containing in f1
+    f=inline(f1);
+    a=input('Enter Lower Limit, a:');
+    b=input('Enter upper Limit, b:');
+    n=input('Enter no. of subintervals, n:');
+    h=(b-a)/n;
+    s0=0;s1=0;
+    s0=f(a)+f(b);
+    for i=1:n-1
+    x=a+i*h;
+    s1=s1+f(x);
+    end
+    s=(h/2)*(s0+2*s1);
+    fprintf('The approximate value of integral by trapezoidal rule is: %11.8f\n\n', s); 
+    </p>
+    <p><b>Eigen Value and Eigen vector</b><br>
+        A=[8 -6 2;-6 7 -4; 2 -4 3];<br>
+        disp("Matrix");<br>
+        disp(A)<br>
+        %Eigenvalues and right eigenvector of matrix A<br> 
+        [V,D]=eig(A)<br>
+        </p>
+    
+    </body>
+</html>
 </body>
 </html>
